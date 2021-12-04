@@ -11,4 +11,4 @@
 #    exit
 #EOF
 
-echo "jongseok"
+ssh root@159.223.58.234
