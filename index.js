@@ -4,7 +4,6 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const HOST = process.env.HOST || 'localhost';
 
-
 app.get('/', (req, res) => {
     res.send('hello world #3');
 })
