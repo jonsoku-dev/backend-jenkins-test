@@ -1,5 +1,4 @@
 #!/bin/sh
-
 ssh root@159.223.58.234 << 'EOF'
     cd ~/backend-jenkins-test
     git pull origin master
