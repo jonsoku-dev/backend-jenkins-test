@@ -1,10 +1,9 @@
-const request= require('supertest');
-const app = require('../index');
+const assert = require('assert');
 
-
-describe('GET /', () => {
-    it('hello world라는 요청이 와야한다.', () =>{
-        //navigate to root and check the response is 'hello world'
-        request(app).get('/').expect('hello world')
-    })
-})
+describe('Array', function() {
+    describe('#indexOf()', function() {
+        it('should return -1 when the value is not present', function() {
+            assert.equal(-1, [1,2,3].indexOf(4));
+        });
+    });
+});
