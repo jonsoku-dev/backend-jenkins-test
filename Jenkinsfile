@@ -50,7 +50,7 @@ pipeline {
         }
         stage('Example Stage 2') {
             agent {
-                          docker {
+                        docker {
                             image 'node:latest'
                           }
                         }
@@ -64,7 +64,7 @@ pipeline {
           agent any
           steps {
             echo 'Build Backend'
-            sh "docker build . -t server --build-arg env=${PROD}"
+            sh "docker build . -t server"
           }
 
           post {
