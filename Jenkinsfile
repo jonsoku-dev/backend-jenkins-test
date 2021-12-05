@@ -91,7 +91,7 @@ pipeline {
                                 configName: "backend-test",
                                 verbose: true,
                                 transfers: [
-                                    sshTransfer(execCommand: "echo 'asdad'"),
+                                    sshTransfer(execCommand: "touch index.html"),
                                 ]
                             )
                         ]
