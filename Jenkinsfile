@@ -25,11 +25,7 @@ pipeline {
     stages {
         stage('Example Stage 1') {
             steps {
-                parallel(
-                        "step 1": { echo "hello" },
-                        "step 2": { echo "world" },
-                        "step 3": { echo "world" }
-                )
+                echo "wow"
             }
         }
         stage('Example Stage 2') {
