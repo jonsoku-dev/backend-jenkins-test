@@ -17,11 +17,7 @@ pipeline {
       }
     }
     stage('BUILD Frontend') {
-      agent {
-        docker {
-          image 'node:latest'
-        }
-      }
+      agent any
       steps {
         dir("./front") {
             sh "cat index.html"
@@ -52,11 +48,7 @@ pipeline {
       }
     }
     stage('BUILD Backend') {
-      agent {
-        docker {
-          image 'node:latest'
-        }
-      }
+      agent any
       steps {
         dir("./server") {
             sh "cat index.html"
