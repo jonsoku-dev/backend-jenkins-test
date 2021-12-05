@@ -6,9 +6,11 @@ pipeline {
   }
   stages {
     stage('Preparation') {
-         checkout scm
-         sh "git rev-parse --short HEAD > .git/commit-id"
-         commitId = readFile('.git/commit-id').trim()
+        steps {
+            checkout scm
+            sh "git rev-parse --short HEAD > .git/commit-id"
+            commitId = readFile('.git/commit-id').trim()
+        }
     }
     stage('TEST Frontend') {
       agent {
@@ -57,7 +59,7 @@ pipeline {
       agent any
       steps {
         script {
-            dockerImage = docker.build "dsfkdslfjdsjflkdsjf"
+          dockerImage = docker.build "dsfkdslfjdsjflkdsjf"
         }
       }
       post {
@@ -70,9 +72,9 @@ pipeline {
       agent any
       steps {
         script {
-            docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
-                def app = docker.build("the2792/backend-jenkins-test:${commitId}", '.').push()
-            }
+          docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
+            def app = docker.build("the2792/backend-jenkins-test:${commitId}", '.').push()
+          }
         }
       }
       post {
