@@ -45,6 +45,11 @@ pipeline {
                         }
         }
         stage('Example Stage 2') {
+            agent {
+                          docker {
+                            image 'node:latest'
+                          }
+                        }
             steps {
                 echo "TEST SERVER"
                 npm install
