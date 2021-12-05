@@ -1,4 +1,6 @@
 def commitId = ""
+def dockerImage = ""
+def registry = "the2792/backend-jenkins-test"
 
 pipeline {
   agent any
@@ -62,7 +64,7 @@ pipeline {
       agent any
       steps {
         script {
-          dockerImage = docker.build "dsfkdslfjdsjflkdsjf"
+          dockerImage = docker.build registry
         }
       }
       post {
@@ -76,7 +78,8 @@ pipeline {
       steps {
         script {
           docker.withRegistry('https://index.docker.io/v1/', '8b3bd7e3-bf55-4322-bca8-4d7610a9c31c') {
-            def app = docker.build("the2792/backend-jenkins-test:${commitId}", '.').push()
+            dockerImage.push("${commitId}")
+            dockerImage.push("latest")
           }
         }
       }
@@ -95,9 +98,9 @@ pipeline {
               configName: "backend-test",
               verbose: true,
               transfers: [
-                sshTransfer(execCommand: "docker stop the2792/backend-jenkins-test:8497d72"),
-                sshTransfer(execCommand: "docker pull the2792/backend-jenkins-test:8497d72"),
-                sshTransfer(execCommand: "docker run -p 3000:3000 -d the2792/backend-jenkins-test:8497d72"),
+//                 sshTransfer(execCommand: "docker stop the2792/backend-jenkins-test:8497d72"),
+                sshTransfer(execCommand: "docker pull the2792/backend-jenkins-test"),
+//                 sshTransfer(execCommand: "docker run -p 3000:3000 -d the2792/backend-jenkins-test:8497d72"),
               ]
             )
           ]
