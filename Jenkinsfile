@@ -1,9 +1,15 @@
 pipeline {
   agent any
   environment {
-    HOME = '.' // Avoid npm root owned
+    HOME = '.', // Avoid npm root owned
+    commitId = ''
   }
   stages {
+    stage('Preparation') {
+         checkout scm
+         sh "git rev-parse --short HEAD > .git/commit-id"
+         commitId = readFile('.git/commit-id').trim()
+    }
     stage('TEST Frontend') {
       agent {
         docker {
@@ -47,11 +53,26 @@ pipeline {
         }
       }
     }
-    stage('BUILD Backend') {
+    stage('BUILD Backend Image') {
       agent any
       steps {
         script {
             dockerImage = docker.build "dsfkdslfjdsjflkdsjf"
+        }
+      }
+      post {
+        failure {
+          error 'This pipeline stops here...'
+        }
+      }
+    }
+    stage('Push Backend Image') {
+      agent any
+      steps {
+        script {
+            docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
+                def app = docker.build("the2792/backend-jenkins-test:${commitId}", '.').push()
+            }
         }
       }
       post {
