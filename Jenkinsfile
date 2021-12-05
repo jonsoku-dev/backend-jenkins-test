@@ -52,8 +52,8 @@ pipeline {
                         }
             steps {
                 echo "TEST SERVER"
-                npm install
-                npm test
+                sh 'npm install'
+                sh 'npm test'
             }
             post {
                                         // If Maven was able to run the tests, even if some of the test
