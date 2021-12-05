@@ -27,62 +27,56 @@ pipeline {
         HOME = '.' // Avoid npm root owned
     }
     stages {
-//         stage('Example Stage 1') {
-//             steps {
-//                 echo "wow"
-//             }
-//
-//             post {
-//                             // If Maven was able to run the tests, even if some of the test
-//                             // failed, record the test results and archive the jar file.
-//                             success {
-//                                 echo 'Successfully Cloned Repository'
-//                             }
-//
-//                             always {
-//                               echo "i tried..."
-//                             }
-//
-//                             cleanup {
-//                               echo "after all other post condition"
-//                             }
-//                         }
-//         }
-//         stage('Example Stage 2') {
-//             agent {
-//                         docker {
-//                             image 'node:latest'
-//                           }
-//                         }
-//             steps {
-//                 echo "TEST SERVER"
-//                 sh 'npm install'
-//                 sh 'npm test'
-//             }
-//         }
-//         stage('Bulid Backend') {
-//           agent any
-//           steps {
-//             echo 'Build Backend'
-//             sh "docker build . -t server"
-//           }
-//
-//           post {
-//             failure {
-//               error 'This pipeline stops here...'
-//             }
-//           }
-//         }
-//         stage('Deploy Backend') {
-//             agent any
-//             steps {
-//               echo 'Build Backend'
-//               sh '''
-//               docker run -p 3000:3000 -d server
-//               '''
-//             }
-//         }
-        stage('SSH transfer') {
+        stage('TEST Frontend') {
+                agent {
+                            docker {
+                                image 'node:latest'
+                              }
+                            }
+                steps {
+                    echo "Frontend TEST"
+                }
+            }
+        stage('BUILD Frontend') {
+                agent any
+                steps {
+                  echo 'Frontend BUILD'
+                }
+            }
+        stage('TEST Backend') {
+            steps {
+                echo "wow"
+            }
+
+            post {
+                            // If Maven was able to run the tests, even if some of the test
+                            // failed, record the test results and archive the jar file.
+                            success {
+                                echo 'Successfully Cloned Repository'
+                            }
+
+                            always {
+                              echo "i tried..."
+                            }
+
+                            cleanup {
+                              echo "after all other post condition"
+                            }
+                        }
+        }
+        stage('BUILD Backend') {
+                  agent any
+                  steps {
+                    echo 'Backend'
+                  }
+
+                  post {
+                    failure {
+                      error 'This pipeline stops here...'
+                    }
+                  }
+                }
+        stage('SSH transfer (deploy)') {
                 steps([$class: 'BapSshPromotionPublisherPlugin']) {
                     sshPublisher(
                         continueOnError: false, failOnError: true,
