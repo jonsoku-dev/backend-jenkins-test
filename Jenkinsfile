@@ -1,8 +1,9 @@
+def commitId = ""
+
 pipeline {
   agent any
   environment {
     HOME = '.' // Avoid npm root owned
-    commitId = ''
   }
   stages {
     stage('Preparation') {
