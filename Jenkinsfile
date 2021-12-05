@@ -1,6 +1,5 @@
 pipeline {
   agent any
-
   environment {
     HOME = '.' // Avoid npm root owned
   }
@@ -18,7 +17,11 @@ pipeline {
       }
     }
     stage('BUILD Frontend') {
-      agent any
+      agent {
+        docker {
+          image 'node:latest'
+        }
+      }
       steps {
         dir("./front") {
             sh "cat index.html"
@@ -26,34 +29,39 @@ pipeline {
       }
     }
     stage('TEST Backend') {
+      agent {
+        docker {
+          image 'node:latest'
+        }
+      }
       steps {
         dir("./server") {
             sh "cat index.html"
         }
       }
-
       post {
         success {
           echo 'Successfully Cloned Repository'
         }
-
         always {
           echo "i tried..."
         }
-
         cleanup {
           echo "after all other post condition"
         }
       }
     }
     stage('BUILD Backend') {
-      agent any
+      agent {
+        docker {
+          image 'node:latest'
+        }
+      }
       steps {
         dir("./server") {
             sh "cat index.html"
         }
       }
-
       post {
         failure {
           error 'This pipeline stops here...'
