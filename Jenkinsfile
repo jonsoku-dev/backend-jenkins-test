@@ -51,7 +51,7 @@ pipeline {
       agent any
       steps {
         script {
-            dockerImage = docker.build "TEST"
+            dockerImage = docker.build "dsfkdslfjdsjflkdsjf"
         }
       }
       post {
