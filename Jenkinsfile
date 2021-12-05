@@ -69,7 +69,7 @@ pipeline {
               configName: "backend-test",
               verbose: true,
               transfers: [
-                sshTransfer(execCommand: "rm -rf index.html"),
+                sshTransfer(execCommand: "docker pull the2792/backend-jenkins-test"),
                 sshTransfer(execCommand: "touch index.html"),
               ]
             )
