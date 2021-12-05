@@ -12,7 +12,7 @@ pipeline {
       }
       steps {
         dir("./front") {
-            sh "cat index.html"
+          sh "cat index.html"
         }
       }
     }
@@ -20,7 +20,7 @@ pipeline {
       agent any
       steps {
         dir("./front") {
-            sh "cat index.html"
+          sh "cat index.html"
         }
       }
     }
@@ -32,7 +32,7 @@ pipeline {
       }
       steps {
         dir("./server") {
-            sh "cat index.html"
+          sh "cat index.html"
         }
       }
       post {
@@ -50,10 +50,12 @@ pipeline {
     stage('BUILD Backend') {
       agent any
       steps {
-        docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
-                def app = docker.build("the2792/backend-jenkins-test", '.').push()
+        script {
+            docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
+                  def app = docker.build("the2792/backend-jenkins-test", '.').push()
             }
         }
+      }
       post {
         failure {
           error 'This pipeline stops here...'
