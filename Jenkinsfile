@@ -22,6 +22,10 @@
 
 pipeline {
     agent any
+
+    environment {
+        HOME = '.' // Avoid npm root owned
+    }
     stages {
         stage('Example Stage 1') {
             steps {
