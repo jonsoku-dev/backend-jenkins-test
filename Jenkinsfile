@@ -78,7 +78,6 @@ pipeline {
             steps {
               echo 'Build Backend'
               sh '''
-              docker rm -f $(docker ps -aq)
               docker run -p 80:80 -d server
               '''
             }
