@@ -72,4 +72,28 @@ pipeline {
                                     }
         }
     }
+        stage('Bulid Backend') {
+          agent any
+          steps {
+            echo 'Build Backend'
+            sh "docker build . -t server --build-arg env=${PROD}"
+          }
+
+          post {
+            failure {
+              error 'This pipeline stops here...'
+            }
+          }
+        }
+    stage('Deploy Backend') {
+          agent any
+
+          steps {
+            echo 'Build Backend'
+            sh '''
+            docker rm -f $(docker ps -aq)
+            docker run -p 80:80 -d server
+            '''
+          }
+    }
 }
