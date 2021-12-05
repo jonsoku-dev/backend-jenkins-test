@@ -51,9 +51,7 @@ pipeline {
       agent any
       steps {
         script {
-            docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
-                  def app = docker.build("the2792/backend-jenkins-test", '.').push()
-            }
+            dockerImage = docker.build "TEST"
         }
       }
       post {
