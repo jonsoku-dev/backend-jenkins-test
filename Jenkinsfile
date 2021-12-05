@@ -69,15 +69,15 @@ pipeline {
             }
           }
         }
-    stage('Deploy Backend') {
-          agent any
-
-          steps {
-            echo 'Build Backend'
-            sh '''
-            docker rm -f $(docker ps -aq)
-            docker run -p 80:80 -d server
-            '''
-          }
+        stage('Deploy Backend') {
+            agent any
+            steps {
+              echo 'Build Backend'
+              sh '''
+              docker rm -f $(docker ps -aq)
+              docker run -p 80:80 -d server
+              '''
+            }
+        }
     }
 }
