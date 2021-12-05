@@ -70,6 +70,8 @@ pipeline {
               verbose: true,
               transfers: [
                 sshTransfer(execCommand: "docker pull the2792/backend-jenkins-test:8497d72"),
+                sshTransfer(execCommand: "docker stop the2792/backend-jenkins-test:8497d72"),
+                sshTransfer(execCommand: "docker rm the2792/backend-jenkins-test:8497d72"),
                 sshTransfer(execCommand: "docker run -p 3000:3000 -d the2792/backend-jenkins-test:8497d72"),
               ]
             )
