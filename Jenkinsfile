@@ -82,5 +82,21 @@ pipeline {
               '''
             }
         }
+        stage('SSH transfer') {
+                steps([$class: 'BapSshPromotionPublisherPlugin']) {
+                    sshPublisher(
+                        continueOnError: false, failOnError: true,
+                        publishers: [
+                            sshPublisherDesc(
+                                configName: "backend-test",
+                                verbose: true,
+                                transfers: [
+                                    sshTransfer(execCommand: "echo 'asdad'"),
+                                ]
+                            )
+                        ]
+                    )
+                }
+            }
     }
 }
