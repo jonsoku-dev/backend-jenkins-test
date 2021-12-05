@@ -46,12 +46,25 @@ pipeline {
         }
         stage('Example Stage 2') {
             steps {
-                parallel(
-                        "step 1": { echo "hello" },
-                        "step 2": { echo "world" },
-                        "step 3": { echo "world" }
-                )
+                echo "TEST SERVER"
+                npm install
+                npm test
             }
+            post {
+                                        // If Maven was able to run the tests, even if some of the test
+                                        // failed, record the test results and archive the jar file.
+                                        success {
+                                            echo 'Successfully Cloned Repository'
+                                        }
+
+                                        always {
+                                          echo "i tried..."
+                                        }
+
+                                        cleanup {
+                                          echo "after all other post condition"
+                                        }
+                                    }
         }
     }
 }
